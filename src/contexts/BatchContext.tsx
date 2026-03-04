@@ -18,7 +18,7 @@ interface BatchContextType {
 
 const BatchContext = createContext<BatchContextType | undefined>(undefined);
 
-const STORAGE_KEY = "sadhguru_selected_batch";
+const STORAGE_KEY = "sadguru_selected_batch";
 
 export const BatchProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();

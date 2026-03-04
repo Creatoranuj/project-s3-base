@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           <div className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="h-10 w-10 rounded-lg" />
             <span className="font-bold text-lg text-sidebar-foreground">
-              Mahima Academy
+              Sadguru Coaching
             </span>
           </div>
           <Button

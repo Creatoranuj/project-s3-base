@@ -124,8 +124,8 @@ const Login = () => {
       <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16">
         <div className="mx-auto w-full max-w-md">
           <Link to="/" className="flex items-center gap-3 mb-8">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-14 w-14 rounded-full object-contain" width={56} height={56} />
-            <span className="font-bold text-2xl text-foreground">Sadhguru Coaching Centre</span>
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-14 w-14 rounded-full object-contain" width={56} height={56} />
+            <span className="font-bold text-2xl text-foreground">Sadguru Coaching Classes</span>
           </Link>
 
           <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
@@ -184,7 +184,7 @@ const Login = () => {
       <div className="hidden lg:flex flex-1 bg-primary items-center justify-center p-12">
         <div className="max-w-lg text-center text-primary-foreground">
           <h2 className="text-3xl font-bold mb-4">Empowering Young Minds</h2>
-          <p className="text-primary-foreground/80 text-lg">Join Mahima Academy today.</p>
+          <p className="text-primary-foreground/80 text-lg">Join Sadguru Coaching Classes today.</p>
         </div>
       </div>
     </div>

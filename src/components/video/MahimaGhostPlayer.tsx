@@ -53,7 +53,7 @@ const MahimaGhostPlayer = memo(({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [volume, setVolume] = useState(() => {
-    const saved = localStorage.getItem('sadhguru_player_volume');
+    const saved = localStorage.getItem('sadguru_player_volume');
     return saved ? parseFloat(saved) : 80;
   });
   const [currentTime, setCurrentTime] = useState(0);
@@ -164,7 +164,7 @@ const MahimaGhostPlayer = memo(({
   const setPlayerVolume = useCallback((vol: number) => {
     sendCommand("setVolume", vol);
     setVolume(vol);
-    localStorage.setItem('sadhguru_player_volume', vol.toString());
+    localStorage.setItem('sadguru_player_volume', vol.toString());
     if (vol === 0) setIsMuted(true);
     else if (isMuted) setIsMuted(false);
   }, [sendCommand, isMuted]);
@@ -502,7 +502,7 @@ const MahimaGhostPlayer = memo(({
           <iframe
             ref={playerRef}
             src={embedUrl!}
-            title="Sadhguru Coaching Centre Video Player"
+            title="Sadguru Coaching Classes Video Player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
@@ -547,7 +547,7 @@ const MahimaGhostPlayer = memo(({
             className={`absolute bottom-[10px] left-0 z-[46] flex items-center justify-center select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'}`}
             style={{ background: 'rgba(40,40,40,0.92)', width: '52px', height: '52px', borderRadius: '6px', ...(isInLastTenSeconds ? { animation: 'pulse-border 1.5s ease-in-out infinite' } : {}) }}
           >
-            <img src={refreshLogo} alt="Mahima Academy" className="h-10 w-10 rounded-sm" draggable={false} />
+            <img src={refreshLogo} alt="Sadguru" className="h-10 w-10 rounded-sm" draggable={false} />
           </div>
 
           {/* BOTTOM-RIGHT WATERMARK — covers YouTube label + Watch on YouTube */}
@@ -555,10 +555,10 @@ const MahimaGhostPlayer = memo(({
             className={`absolute bottom-[2px] right-0 z-[46] flex items-center justify-center gap-1.5 px-3 py-1.5 select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'}`}
             style={{ background: 'rgba(40,40,40,0.92)', borderRadius: '6px 0 0 6px', ...(isInLastTenSeconds ? { animation: 'pulse-border 1.5s ease-in-out infinite' } : {}) }}
           >
-            <img src={refreshLogo} alt="Mahima Academy" className="h-8 w-8 rounded-sm" draggable={false} />
-            <span className="text-white text-sm font-semibold tracking-wide leading-tight">
-              Mahima Academy
-            </span>
+             <img src={refreshLogo} alt="Sadguru" className="h-8 w-8 rounded-sm" draggable={false} />
+             <span className="text-white text-sm font-semibold tracking-wide leading-tight">
+               Sadguru Coaching
+             </span>
           </div>
 
           {/* TOP-RIGHT WATERMARK — covers YouTube "More options" area on hover */}
@@ -566,8 +566,8 @@ const MahimaGhostPlayer = memo(({
             className={`absolute top-2 right-2 z-[46] flex items-center gap-1 px-1.5 py-1 select-none pointer-events-none rounded transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'}`}
             style={{ background: 'rgba(0,0,0,0.4)' }}
           >
-            <img src={refreshLogo} alt="Mahima Academy" className="h-6 w-6 rounded-sm" draggable={false} />
-            <span className="text-white text-[10px] font-semibold tracking-wide opacity-80">MA</span>
+             <img src={refreshLogo} alt="Sadguru" className="h-6 w-6 rounded-sm" draggable={false} />
+             <span className="text-white text-[10px] font-semibold tracking-wide opacity-80">SC</span>
           </div>
 
           {/* GHOST OVERLAY - single-tap toggles controls only */}

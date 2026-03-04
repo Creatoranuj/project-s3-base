@@ -31,14 +31,14 @@ const Header = ({ onMenuClick, userName }: HeaderProps) => {
         <Link to="/" className="flex items-center gap-2.5" style={{ padding: '0 4px' }}>
           <img
             src={logoIcon}
-            alt="Sadhguru Coaching Centre"
+            alt="Sadguru Coaching Classes"
             className="h-10 w-10 rounded-full object-contain"
             width={40}
             height={40}
           />
           {!isMobile && (
             <span className="font-semibold text-lg text-foreground">
-              Sadhguru Coaching Centre
+              Sadguru Coaching Classes
             </span>
           )}
         </Link>

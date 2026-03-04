@@ -19,7 +19,7 @@ interface MahimaVideoPlayerProps {
  * MahimaVideoPlayer - Enhanced Secure Video Player
  * 
  * Features:
- * 1. Full "Sadhguru Coaching Centre" watermark covering YouTube logo (bottom-right)
+ * 1. Full "Sadguru Coaching Classes" watermark covering YouTube logo (bottom-right)
  * 2. No share button, no related videos, no end cards
  * 3. Right-click/context menu disabled
  * 4. Ghost watermarks with user email/ID for anti-piracy

@@ -88,7 +88,7 @@ const AdminRegister = () => {
         
         <div className="relative z-10 max-w-lg text-center text-white">
           <div className="w-32 h-32 mx-auto mb-8 bg-purple-500/20 rounded-3xl flex items-center justify-center backdrop-blur-sm border border-white/10">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-20 w-20 rounded-xl" />
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-20 w-20 rounded-xl" />
           </div>
           <h2 className="text-4xl font-bold mb-4">Join as Admin</h2>
           <p className="text-white/70 text-lg">
@@ -101,8 +101,8 @@ const AdminRegister = () => {
       <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16">
         <div className="mx-auto w-full max-w-md">
           <Link to="/" className="flex items-center gap-3 mb-8 lg:hidden">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-12 w-12 rounded-xl" />
-            <span className="font-bold text-2xl text-white">Sadhguru Coaching Centre</span>
+             <img src={logo} alt="Sadguru Coaching Classes" className="h-12 w-12 rounded-xl" />
+            <span className="font-bold text-2xl text-white">Sadguru Coaching Classes</span>
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
@@ -134,7 +134,7 @@ const AdminRegister = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@mahima.edu"
+                  placeholder="admin@sadguru.edu"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"

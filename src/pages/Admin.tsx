@@ -81,7 +81,7 @@ const Admin = () => {
   const [chaptersList, setChaptersList] = useState<any[]>([]);
   const [uploadMode, setUploadMode] = useState<"link" | "file">("link");
   const [contentDescription, setContentDescription] = useState("");
-  const [watermarkText, setWatermarkText] = useState("Sadhguru Coaching Centre");
+  const [watermarkText, setWatermarkText] = useState("Sadguru Coaching Classes");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -1340,7 +1340,7 @@ const Admin = () => {
                 {/* Watermark */}
                 <div className="space-y-2">
                   <Label>Watermark Text</Label>
-                  <Input value={watermarkText} onChange={(e)=>setWatermarkText(e.target.value)} placeholder="Sadhguru Coaching Centre" />
+                  <Input value={watermarkText} onChange={(e)=>setWatermarkText(e.target.value)} placeholder="Sadguru Coaching Classes" />
                 </div>
 
                 <Button className="w-full" onClick={handleContentUpload} disabled={isUploading}>

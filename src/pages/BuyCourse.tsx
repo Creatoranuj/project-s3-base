@@ -14,7 +14,7 @@ import {
 import { useAdminEnrollment } from "@/hooks/useAdminEnrollment";
 
 const MERCHANT_UPI = "mandharilalyadav101174-2@okaxis"; 
-const MERCHANT_NAME = "Mahima Academy"; 
+const MERCHANT_NAME = "Sadguru Coaching Classes"; 
 const SUCCESS_SOUND_URL = "https://cdn.pixabay.com/audio/2021/08/04/audio_aad70ee296.mp3";
 
 const BuyCourse = () => {

@@ -106,7 +106,7 @@ const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
         >
           <img src={mahimaLogo} alt="" className="h-5 w-5 rounded" draggable={false} />
           <span className="text-white text-xs font-semibold tracking-wide">
-            Sadhguru Coaching Centre
+            Sadguru Coaching Classes
           </span>
         </div>
       </div>

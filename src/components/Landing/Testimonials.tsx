@@ -32,7 +32,7 @@ const Testimonials = memo(() => (
             ))}
           </div>
           <blockquote className="text-foreground text-lg italic leading-relaxed">
-            "Sadhguru Coaching Centre transformed my preparation. The faculty's dedication and structured approach helped me secure a top rank. I couldn't have done it without them!"
+            "Sadguru Coaching Classes transformed my preparation. The faculty's dedication and structured approach helped me secure a top rank. I couldn't have done it without them!"
           </blockquote>
           <div>
             <p className="font-semibold text-foreground">Priya Sharma</p>

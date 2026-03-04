@@ -15,7 +15,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
             <div className="flex items-center gap-3">
               <img 
                 src={logoIcon} 
-                 alt="Sadhguru Coaching Centre" 
+                 alt="Sadguru Coaching Classes" 
                 className="h-11 w-11 rounded-full object-contain"
                 width={44}
                 height={44}
@@ -23,7 +23,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
                 decoding="async"
                 style={{ opacity: 0.9 }}
               />
-              <span className="font-bold text-xl text-foreground">Sadhguru Coaching Centre</span>
+              <span className="font-bold text-xl text-foreground">Sadguru Coaching Classes</span>
             </div>
             <p className="text-muted-foreground text-sm">
               Nurturing young minds through joyful learning experiences.
@@ -45,7 +45,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
           <div>
             <h4 className="font-semibold text-foreground mb-4">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>info@sadhgurucoaching.com</li>
+              <li>info@sadgurucoaching.com</li>
               <li>+91 98765 43210</li>
               <li>New Delhi, India</li>
             </ul>
@@ -63,7 +63,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border text-center text-sm text-muted-foreground">
-          © {currentYear} Sadhguru Coaching Centre. All rights reserved.
+          © {currentYear} Sadguru Coaching Classes. All rights reserved.
         </div>
       </div>
     </footer>

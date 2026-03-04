@@ -1,4 +1,4 @@
-// Mahima Academy - Main Entry Point
+// Sadguru Coaching Classes - Main Entry Point
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";

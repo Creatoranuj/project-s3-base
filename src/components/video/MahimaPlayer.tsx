@@ -4,20 +4,20 @@ interface MahimaPlayerProps {
   videoId?: string;
   videoUrl?: string;
   poster?: string;
-  /** Hide all watermarks including "Sadhguru Coaching Centre" overlay */
+  /** Hide all watermarks including "Sadguru Coaching Classes" overlay */
   hideWatermarks?: boolean;
   /** Callback when video starts playing */
   onPlay?: () => void;
 }
 
 /**
- * Mahima Player - Secure YouTube embed with anti-piracy features
+ * Sadguru Player - Secure YouTube embed with anti-piracy features
  * 
  * Features:
  * - Blocks long-press context menu on mobile
  * - Disables Share button
  * - Hides YouTube branding/watermarks
- * - Optional "Sadhguru Coaching Centre" watermark (off by default)
+ * - Optional "Sadguru Coaching Classes" watermark (off by default)
  * - Prevents right-click context menu
  * - Touch-friendly with gesture blocking
  */
@@ -128,7 +128,7 @@ const MahimaPlayer = ({
   return (
     <div 
       ref={containerRef}
-      className="relative rounded-xl overflow-hidden shadow-2xl bg-black sadhguru-player select-none"
+      className="relative rounded-xl overflow-hidden shadow-2xl bg-black sadguru-player select-none"
       onContextMenu={(e) => e.preventDefault()}
       style={{ 
         WebkitTouchCallout: 'none',
