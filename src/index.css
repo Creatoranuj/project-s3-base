@@ -446,3 +446,9 @@
 .mahima-play-button:hover {
   transform: scale(1.1);
 }
+
+/* Pulsing border animation for last 10 seconds of video */
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 0 2px hsl(48 96% 53% / 0.6); }
+  50% { box-shadow: 0 0 12px 4px hsl(48 96% 53% / 0.9); }
+}
