@@ -67,9 +67,9 @@ export default function Books() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Mahima Academy" className="h-10 w-10 rounded-xl" />
-            <span className="font-bold text-xl text-foreground hidden sm:inline">
-              Mahima Academy
+             <img src={logo} alt="Sadguru Coaching Classes" className="h-10 w-10 rounded-xl" />
+             <span className="font-bold text-xl text-foreground hidden sm:inline">
+               Sadguru Coaching Classes
             </span>
           </Link>
           <div className="flex items-center gap-3">
@@ -184,7 +184,7 @@ export default function Books() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: 'Recommended Books - Mahima Academy',
+            name: 'Recommended Books - Sadguru Coaching Classes',
             description: 'Curated textbooks and study materials for students',
             url: window.location.href
           })

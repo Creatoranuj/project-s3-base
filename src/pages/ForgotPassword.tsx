@@ -50,8 +50,8 @@ const ForgotPassword = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center gap-3 mb-8 justify-center">
-          <img src={logo} alt="Sadhguru Coaching Centre" className="h-12 w-12 rounded-xl" />
-          <span className="font-bold text-2xl text-foreground">Sadhguru Coaching Centre</span>
+          <img src={logo} alt="Sadguru Coaching Classes" className="h-12 w-12 rounded-xl" />
+          <span className="font-bold text-2xl text-foreground">Sadguru Coaching Classes</span>
         </Link>
 
         <Card className="shadow-lg">

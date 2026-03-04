@@ -49,7 +49,7 @@ const Hero = memo(({ data, stats = [] }: HeroProps) => {
 
             {/* Dynamic Subtitle */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0">
-              {data?.subtitle || "Join Mahima Academy for world-class education."}
+              {data?.subtitle || "Join Sadguru Coaching Classes for world-class education."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">

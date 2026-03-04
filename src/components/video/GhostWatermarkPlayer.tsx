@@ -176,7 +176,7 @@ const GhostWatermarkPlayer: React.FC<GhostWatermarkPlayerProps> = ({
             className="absolute top-3 right-3 text-white text-sm font-semibold select-none"
             style={{ opacity: watermarkOpacity, mixBlendMode: 'overlay' as const, transition: 'opacity 2s ease' }}
           >
-            Sadhguru Coaching Centre
+            Sadguru Coaching Classes
           </div>
 
           <div

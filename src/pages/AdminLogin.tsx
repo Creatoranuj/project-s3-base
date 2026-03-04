@@ -114,8 +114,8 @@ const AdminLogin = () => {
       <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16">
         <div className="mx-auto w-full max-w-md">
           <Link to="/" className="flex items-center gap-3 mb-8">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-12 w-12 rounded-xl" />
-            <span className="font-bold text-2xl text-white">Sadhguru Coaching Centre</span>
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-12 w-12 rounded-xl" />
+            <span className="font-bold text-2xl text-white">Sadguru Coaching Classes</span>
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
@@ -132,7 +132,7 @@ const AdminLogin = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-white">Admin Email</Label>
-                <Input id="email" type="email" placeholder="admin@mahima.edu" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12" />
+                <Input id="email" type="email" placeholder="admin@sadguru.edu" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12" />
               </div>
 
               <div className="space-y-2">

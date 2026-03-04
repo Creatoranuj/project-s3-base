@@ -18,11 +18,11 @@ interface WhiteLabelVideoPlayerProps {
 }
 
 /**
- * WhiteLabelVideoPlayer - Fully branded YouTube player for Sadhguru Coaching Centre
+ * WhiteLabelVideoPlayer - Fully branded YouTube player for Sadguru Coaching Classes
  * 
  * Features:
  * - Hides all YouTube branding (Share, Logo, Watch on YouTube)
- * - Custom Sadhguru Coaching Centre watermark
+ * - Custom Sadguru Coaching Classes watermark
  * - Custom share modal (WhatsApp, Facebook, Twitter, Copy Link)
  * - Custom end screen overlay
  * - Anti-piracy: blocks right-click, long-press, context menu
@@ -177,7 +177,7 @@ const WhiteLabelVideoPlayer = ({
         <iframe
           ref={playerRef}
           src={embedUrl}
-          title="Sadhguru Coaching Centre Video Player"
+          title="Sadguru Coaching Classes Video Player"
           allowFullScreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           referrerPolicy="strict-origin-when-cross-origin"
@@ -214,7 +214,7 @@ const WhiteLabelVideoPlayer = ({
           onContextMenu={(e) => e.preventDefault()}
         />
 
-        {/* ========== SADHGURU COACHING CENTRE BRANDING ========== */}
+        {/* ========== SADGURU COACHING CLASSES BRANDING ========== */}
 
         {/* Custom Share Button - Top Right */}
         {showShareButton && (
@@ -231,25 +231,25 @@ const WhiteLabelVideoPlayer = ({
           </Button>
         )}
 
-        {/* Sadhguru Coaching Centre Watermark - Bottom right, on top of blocker */}
-        <div 
-          className="sadhguru-watermark absolute z-[45] flex items-center gap-2 bg-black/70 backdrop-blur-sm px-3 py-2 rounded-lg select-none"
-          style={{
-            right: '10px',
-            bottom: '16px',
-            pointerEvents: 'none',
-          }}
-        >
-          <img 
-            src={mahimaLogo} 
-            alt="" 
-            className="h-8 w-8 rounded"
-            draggable={false}
-          />
-          <span className="text-white text-sm font-semibold tracking-wide">
-            Sadhguru Coaching Centre
-          </span>
-        </div>
+         {/* Sadguru Coaching Classes Watermark - Bottom right, on top of blocker */}
+         <div 
+           className="sadguru-watermark absolute z-[45] flex items-center gap-2 bg-black/70 backdrop-blur-sm px-3 py-2 rounded-lg select-none"
+           style={{
+             right: '10px',
+             bottom: '16px',
+             pointerEvents: 'none',
+           }}
+         >
+           <img 
+             src={mahimaLogo} 
+             alt="" 
+             className="h-8 w-8 rounded"
+             draggable={false}
+           />
+           <span className="text-white text-sm font-semibold tracking-wide">
+             Sadguru Coaching Classes
+           </span>
+         </div>
 
         {/* End Screen Overlay - covers everything when video ends */}
         {showEndScreen && (

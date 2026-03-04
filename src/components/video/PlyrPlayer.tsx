@@ -19,7 +19,7 @@ const PlyrPlayer = ({ videoId, poster }: PlyrPlayerProps) => {
 
   return (
     <div 
-      className="relative rounded-xl overflow-hidden shadow-2xl bg-black group sadhguru-player select-none"
+      className="relative rounded-xl overflow-hidden shadow-2xl bg-black group sadguru-player select-none"
       onContextMenu={(e) => e.preventDefault()}
       style={{ 
         WebkitTouchCallout: 'none',
@@ -38,7 +38,7 @@ const PlyrPlayer = ({ videoId, poster }: PlyrPlayerProps) => {
         {/* YouTube iframe - NO web-share permission */}
         <iframe
           src={embedUrl}
-          title="Sadhguru Coaching Centre Video"
+          title="Sadguru Coaching Classes Video"
           allowFullScreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           referrerPolicy="strict-origin-when-cross-origin"

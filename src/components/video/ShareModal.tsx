@@ -19,7 +19,7 @@ interface ShareModalProps {
 const ShareModal = ({ open, onOpenChange, title = "Share this lesson" }: ShareModalProps) => {
   const [copied, setCopied] = useState(false);
   const shareUrl = window.location.href;
-  const shareText = `Check out this lesson on Sadhguru Coaching Centre!`;
+  const shareText = `Check out this lesson on Sadguru Coaching Classes!`;
 
   const handleCopyLink = async () => {
     try {
@@ -52,7 +52,7 @@ const ShareModal = ({ open, onOpenChange, title = "Share this lesson" }: ShareMo
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3">
-            <img src={mahimaLogo} alt="Sadhguru Coaching Centre" className="h-8 w-8 rounded" />
+            <img src={mahimaLogo} alt="Sadguru Coaching Classes" className="h-8 w-8 rounded" />
             {title}
           </DialogTitle>
         </DialogHeader>

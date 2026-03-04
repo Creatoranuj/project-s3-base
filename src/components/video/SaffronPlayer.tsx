@@ -37,7 +37,7 @@ const SaffronPlayer = ({ videoId, videoUrl, poster }: SaffronPlayerProps) => {
 
   return (
     <div 
-      className="relative rounded-xl overflow-hidden shadow-2xl bg-black group mahima-player select-none"
+      className="relative rounded-xl overflow-hidden shadow-2xl bg-black group sadguru-player select-none"
       onContextMenu={(e) => e.preventDefault()}
       style={{ 
         WebkitTouchCallout: 'none',

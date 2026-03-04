@@ -57,7 +57,7 @@ const AdminUpload = () => {
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
-  const [watermarkText, setWatermarkText] = useState("Sadhguru Coaching Centre");
+  const [watermarkText, setWatermarkText] = useState("Sadguru Coaching Classes");
   const [isUploading, setIsUploading] = useState(false);
   const [pdfInputMode, setPdfInputMode] = useState<"file" | "url">("file");
   const [pdfUrl, setPdfUrl] = useState("");
@@ -468,7 +468,7 @@ const AdminUpload = () => {
       <header className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white shadow-lg">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-10 w-10 rounded-xl" />
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-10 w-10 rounded-xl" />
             <div>
               <h1 className="text-lg font-bold flex items-center gap-2">
                 <Shield className="h-5 w-5 text-purple-400" />

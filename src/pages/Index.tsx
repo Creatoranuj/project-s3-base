@@ -17,10 +17,10 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from "@/components/ui/sheet";
-import logo from "@/assets/mahima-logo.png";
+import logo from "@/assets/mahima-logo.png"; // TODO: Replace with new Sadguru logo when available
 
 const defaultHeroData: HeroData = {
-  title: "Welcome to Sadhguru Coaching Centre",
+  title: "Welcome to Sadguru Coaching Classes",
   subtitle: "Quality education for every student",
   cta_text: "Get Started",
 };
@@ -71,12 +71,12 @@ const Navigation = memo(({ isAuthenticated }: { isAuthenticated: boolean }) => {
         <Link to="/" className="flex items-center gap-3">
           <img
             src={logo}
-            alt="Sadhguru Coaching Centre"
+            alt="Sadguru Coaching Classes"
             className="h-10 w-10 rounded-xl"
             loading="eager"
           />
           <span className="font-bold text-xl text-foreground hidden sm:inline">
-            Sadhguru Coaching Centre
+            Sadguru Coaching Classes
           </span>
         </Link>
 
@@ -96,7 +96,7 @@ const Navigation = memo(({ isAuthenticated }: { isAuthenticated: boolean }) => {
             <SheetHeader>
               <SheetTitle className="flex items-center gap-2">
                 <img src={logo} alt="Logo" className="h-8 w-8 rounded-lg" />
-                Sadhguru Coaching
+                Sadguru Coaching
               </SheetTitle>
             </SheetHeader>
             <div className="flex flex-col gap-2 mt-6">

@@ -158,7 +158,7 @@ const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
           
           {/* Static corner watermark */}
           <div className="absolute top-4 right-4 text-white/20 text-sm font-semibold pointer-events-none select-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Sadhguru Coaching Centre
+            Sadguru Coaching Classes
           </div>
           
           {/* Bottom watermark always visible */}

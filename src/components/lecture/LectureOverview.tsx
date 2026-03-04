@@ -9,7 +9,7 @@ interface LectureOverviewProps {
 }
 
 const LectureOverview: React.FC<LectureOverviewProps> = ({
-  description = 'Video - Mahima Academy',
+  description = 'Video - Sadguru Coaching Classes',
   learningPoints = [
     'Basic definitions',
     'Real-world examples',

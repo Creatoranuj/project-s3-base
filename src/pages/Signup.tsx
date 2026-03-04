@@ -114,7 +114,7 @@ const Signup = () => {
       <div className="hidden lg:flex flex-1 bg-secondary items-center justify-center p-12">
         <div className="max-w-lg text-center text-secondary-foreground">
           <div className="w-24 h-24 mx-auto mb-8 bg-secondary-foreground/20 rounded-3xl flex items-center justify-center">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-16 w-16 rounded-xl" />
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-16 w-16 rounded-xl" />
           </div>
           <h2 className="text-3xl font-bold mb-4">Start Your Journey</h2>
           <p className="text-secondary-foreground/80 text-lg">
@@ -126,13 +126,13 @@ const Signup = () => {
       <div className="flex-1 flex flex-col justify-center px-8 py-12 lg:px-16">
         <div className="mx-auto w-full max-w-md">
           <Link to="/" className="flex items-center gap-3 mb-8 lg:hidden">
-            <img src={logo} alt="Sadhguru Coaching Centre" className="h-12 w-12 rounded-xl" />
-            <span className="font-bold text-2xl text-foreground">Sadhguru Coaching Centre</span>
+            <img src={logo} alt="Sadguru Coaching Classes" className="h-12 w-12 rounded-xl" />
+            <span className="font-bold text-2xl text-foreground">Sadguru Coaching Classes</span>
           </Link>
 
           <h1 className="text-3xl font-bold text-foreground mb-2">Create Account</h1>
           <p className="text-muted-foreground mb-8">
-            Join Mahima Academy today - Get instant access to free courses!
+            Join Sadguru Coaching Classes today - Get instant access to free courses!
           </p>
 
           {errorMessage && (

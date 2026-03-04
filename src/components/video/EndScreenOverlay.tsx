@@ -15,7 +15,7 @@ interface EndScreenOverlayProps {
  * - z-index: 2147483647 (maximum) to ensure it covers ALL YouTube elements
  * - Solid black background - no transparency to prevent YouTube UI from showing through
  * - Blocks all click events on YouTube's end-screen elements
- * - Shows Sadhguru Coaching Centre branding instead of YouTube logo
+ * - Shows Sadguru Coaching Classes branding instead of YouTube logo
  */
 const EndScreenOverlay = ({ 
   onReplay, 
@@ -40,17 +40,17 @@ const EndScreenOverlay = ({
         pointerEvents: 'auto', // Capture all events
       }}
     >
-      {/* Sadhguru Coaching Centre Branding */}
-      <div className="flex items-center gap-3 mb-8">
-        <img 
-          src={mahimaLogo} 
-          alt="Sadhguru Coaching Centre" 
-          className="h-12 w-12 rounded-lg shadow-lg"
-          draggable={false}
-        />
-        <div className="text-white">
-          <h3 className="text-xl font-bold">Sadhguru Coaching Centre</h3>
-          <p className="text-sm text-white/70">More lessons await you!</p>
+       {/* Sadguru Coaching Classes Branding */}
+       <div className="flex items-center gap-3 mb-8">
+         <img 
+           src={mahimaLogo} 
+           alt="Sadguru Coaching Classes" 
+           className="h-12 w-12 rounded-lg shadow-lg"
+           draggable={false}
+         />
+         <div className="text-white">
+           <h3 className="text-xl font-bold">Sadguru Coaching Classes</h3>
+           <p className="text-sm text-white/70">More lessons await you!</p>
         </div>
       </div>
 

@@ -138,7 +138,7 @@ const BrandingOverlay = () => (
       onClick={(e) => e.stopPropagation()}
     >
       <img src={refreshLogo} alt="" className="h-5 w-5 rounded-sm" draggable={false} />
-      <span className="text-white text-xs font-semibold tracking-wide">Sadhguru Coaching Centre</span>
+      <span className="text-white text-xs font-semibold tracking-wide">Sadguru Coaching Classes</span>
     </div>
   </div>
 );

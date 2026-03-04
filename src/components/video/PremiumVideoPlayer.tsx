@@ -513,7 +513,7 @@ const PremiumVideoPlayer: React.FC<PremiumVideoPlayerProps> = ({ videoUrl, title
           transition: 'opacity 1.5s ease',
         }}
       >
-        <span className="text-white text-xs font-semibold">Sadhguru Coaching Centre</span>
+        <span className="text-white text-xs font-semibold">Sadguru Coaching Classes</span>
       </div>
     </div>
   );

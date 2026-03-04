@@ -1,5 +1,21 @@
 # Memorywork – Changes Log
 
+## Date: 2026-03-04 (Rebrand: Sadhguru Coaching Centre → Sadguru Coaching Classes)
+
+### Changes Made
+Global rebrand across ~25+ files:
+- All visible text "Sadhguru Coaching Centre" → "Sadguru Coaching Classes"
+- All "Mahima Academy" references → "Sadguru Coaching Classes"
+- PWA manifest: name/short_name updated
+- Capacitor config: appName updated
+- Video player watermarks: all 7 player components updated
+- CSS class names: `.sadhguru-player` → `.sadguru-player`, `.sadhguru-watermark` → `.sadguru-watermark`
+- localStorage keys: `sadhguru_player_volume` → `sadguru_player_volume`, `sadhguru_selected_batch` → `sadguru_selected_batch`
+- index.html: title, meta tags, OG tags all updated
+- Logo files remain unchanged (mahima-logo.png, mahima-academy-logo.png) — replace when new assets available
+
+---
+
 ## Date: 2026-03-04 (Master Plan Implementation – Phase 2, 6, 9)
 
 ### Changes Made
