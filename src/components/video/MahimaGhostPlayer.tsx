@@ -544,16 +544,16 @@ const MahimaGhostPlayer = memo(({
 
           {/* BOTTOM-LEFT WATERMARK — covers YouTube channel avatar + infinity symbol */}
           <div
-            className={`absolute bottom-[10px] left-0 z-[46] flex items-center justify-center select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'} ${isInLastTenSeconds ? 'ring-2 ring-yellow-400 animate-pulse' : ''}`}
-            style={{ background: 'rgba(40,40,40,0.92)', width: '52px', height: '52px', borderRadius: '6px' }}
+            className={`absolute bottom-[10px] left-0 z-[46] flex items-center justify-center select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'}`}
+            style={{ background: 'rgba(40,40,40,0.92)', width: '52px', height: '52px', borderRadius: '6px', ...(isInLastTenSeconds ? { animation: 'pulse-border 1.5s ease-in-out infinite' } : {}) }}
           >
             <img src={refreshLogo} alt="Mahima Academy" className="h-10 w-10 rounded-sm" draggable={false} />
           </div>
 
           {/* BOTTOM-RIGHT WATERMARK — covers YouTube label + Watch on YouTube */}
           <div
-            className={`absolute bottom-[2px] right-0 z-[46] flex items-center justify-center gap-1.5 px-3 py-1.5 select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'} ${isInLastTenSeconds ? 'ring-2 ring-yellow-400 animate-pulse' : ''}`}
-            style={{ background: 'rgba(40,40,40,0.92)', borderRadius: '6px 0 0 6px' }}
+            className={`absolute bottom-[2px] right-0 z-[46] flex items-center justify-center gap-1.5 px-3 py-1.5 select-none pointer-events-none transition-opacity duration-500 ${watermarkVisible ? 'opacity-100' : 'opacity-0'}`}
+            style={{ background: 'rgba(40,40,40,0.92)', borderRadius: '6px 0 0 6px', ...(isInLastTenSeconds ? { animation: 'pulse-border 1.5s ease-in-out infinite' } : {}) }}
           >
             <img src={refreshLogo} alt="Mahima Academy" className="h-8 w-8 rounded-sm" draggable={false} />
             <span className="text-white text-sm font-semibold tracking-wide leading-tight">

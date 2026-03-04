@@ -127,6 +127,26 @@ export const useMessages = () => {
     }
   }, [userId, fetchMessages]);
 
+  // Real-time subscription for messages
+  useEffect(() => {
+    if (!userId) return;
+
+    const channel = supabase
+      .channel(`messages-${userId}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'messages' },
+        () => {
+          fetchMessages();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [userId, fetchMessages]);
+
   return {
     inbox,
     sent,

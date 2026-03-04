@@ -116,6 +116,26 @@ export const useComments = (lessonId?: string) => {
     fetchComments();
   }, [fetchComments]);
 
+  // Real-time subscription for comments
+  useEffect(() => {
+    if (!lessonId) return;
+
+    const channel = supabase
+      .channel(`comments-${lessonId}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'comments', filter: `lesson_id=eq.${lessonId}` },
+        () => {
+          fetchComments();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [lessonId, fetchComments]);
+
   return {
     comments,
     loading,

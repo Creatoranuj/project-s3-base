@@ -1,5 +1,54 @@
 # Memorywork – Changes Log
 
+## Date: 2026-03-04 (Master Plan Implementation – Phase 2, 6, 9)
+
+### Changes Made
+
+| File | Changes |
+|------|---------|
+| `src/index.css` | Added `@keyframes pulse-border` animation for golden glow pulsing effect on watermarks during last 10s of video playback |
+| `src/components/video/MahimaGhostPlayer.tsx` | Replaced `ring-2 ring-yellow-400 animate-pulse` Tailwind classes with custom `pulse-border` CSS keyframe animation on both bottom-left and bottom-right watermarks for smoother golden glow effect in last 10 seconds |
+| `src/hooks/useComments.ts` | Added Supabase real-time subscription using `postgres_changes` channel — auto-refreshes comments when new ones are inserted, updated, or deleted |
+| `src/hooks/useMessages.ts` | Added Supabase real-time subscription for messages table — auto-refreshes inbox/sent/unread counts on any change |
+
+### Audit Checklist Status (25 Items)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 1 | Mobile hamburger menu | ✅ Done | Sheet-based menu in Index.tsx |
+| 2 | Video watermark hidden first 10s | ✅ Done | `watermarkVisible` logic in MahimaGhostPlayer |
+| 3 | Watermark fade-in at 10s | ✅ Done | `transition-opacity duration-500` |
+| 4 | Watermark locked last 10s | ✅ Done | `isInLastTenSeconds` override |
+| 5 | Pulsing border last 10s | ✅ Done | Custom `pulse-border` keyframe animation |
+| 6 | End screen suppression | ✅ Done | `stopVideo` + `seekTo(0, false)` on state 0 |
+| 7 | Custom EndScreenOverlay | ✅ Done | Replay/Next buttons render |
+| 8 | Progress bar seek (mouse) | ✅ Done | `handleProgressMouseDown` |
+| 9 | Progress bar seek (touch) | ✅ Done | `handleProgressTouchStart` + `touchcancel` |
+| 10 | Skip forward/backward 10s | ✅ Done | Custom icon buttons |
+| 11 | Keyboard shortcuts | ✅ Done | Space, arrows, M, F, J, K, L |
+| 12 | Admin login & role check | ✅ Done | `checkUserRole` in AuthContext |
+| 13 | Admin breadcrumb drill-down | ✅ Done | AdminUpload.tsx |
+| 14 | Admin create chapter | ✅ Done | AdminUpload.tsx |
+| 15 | Admin create sub-folder | ✅ Done | AdminUpload.tsx |
+| 16 | Admin upload content | ✅ Done | AdminUpload.tsx |
+| 17 | MIME type validation | ✅ Done | Blocked extensions list in AdminUpload |
+| 18 | Student login | ✅ Done | AuthContext |
+| 19 | Course progress bar | ✅ Done | LessonView.tsx `completedLessonIds` |
+| 20 | 80% auto-complete | ✅ Done | `handleVideoTimeUpdate` threshold |
+| 21 | RLS policies | ⚠️ Needs manual review | Profiles table has permissive policies |
+| 22 | Storage buckets | ⚠️ Needs migration | `content`, `course-videos` etc. not yet created |
+| 23 | PWA manifest | ✅ Done | Correct branding in manifest.json |
+| 24 | Real-time subscriptions | ✅ Done | Comments + Messages hooks |
+| 25 | Branding consistency | ✅ Done | "Sadhguru Coaching Centre" throughout |
+
+### Remaining Manual Actions
+- **RLS hardening**: Run SQL migration to restrict profiles INSERT/UPDATE/DELETE to own rows only
+- **Storage buckets**: Run SQL migration to create `content`, `comment-images`, `course-videos`, `course-materials`, `receipts` buckets
+- **Leaked password protection**: Enable HaveIBeenPwned in Supabase Dashboard > Authentication > Password Security
+
+---
+
+
 ## Date: 2026-03-03 (Video Player Final Polish – Watermark Timing, Seeking, End Screen)
 
 ### Files Modified
