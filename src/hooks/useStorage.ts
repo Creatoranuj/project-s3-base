@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-export type StorageBucket = 'course-videos' | 'course-materials' | 'receipts' | 'avatars' | 'content';
+export type StorageBucket = 'course-videos' | 'course-materials' | 'receipts' | 'avatars' | 'content' | 'comment-images' | 'book-covers' | 'notices' | 'chat-attachments';
 
 export interface UploadResult {
   publicUrl: string;
