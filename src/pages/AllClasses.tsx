@@ -56,14 +56,20 @@ const AllClasses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const { data, error } = await supabase
-          .from("courses")
-          .select("*")
-          .order("title", { ascending: true });
+        const [coursesRes, lessonsRes] = await Promise.all([
+          supabase.from("courses").select("*").order("title", { ascending: true }),
+          supabase.from("lessons").select("course_id"),
+        ]);
 
-        if (error) throw error;
+        if (coursesRes.error) throw coursesRes.error;
 
-        let filtered = data || [];
+        // Build lesson count map
+        const countMap: Record<number, number> = {};
+        (lessonsRes.data || []).forEach((l: any) => {
+          if (l.course_id) countMap[l.course_id] = (countMap[l.course_id] || 0) + 1;
+        });
+
+        let filtered = coursesRes.data || [];
         if (selectedBatch) {
           filtered = filtered.filter((c: any) => c.id === selectedBatch.id);
         }
@@ -72,7 +78,7 @@ const AllClasses = () => {
           id: c.id,
           title: c.title,
           grade: c.grade,
-          lessonCount: 0,
+          lessonCount: countMap[c.id] || 0,
           completedCount: 0,
         }));
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { ChevronLeft, FileText, MessageCircle, Download, Eye, ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronLeft, FileText, MessageCircle, Download, Eye, ChevronUp, ChevronDown, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { MahimaGhostPlayer } from "@/components/video";
+import { useComments } from "@/hooks/useComments";
+import { useAuth } from "@/contexts/AuthContext";
 
 const DriveEmbedViewer = lazy(() => import("@/components/course/DriveEmbedViewer"));
 
@@ -30,6 +32,9 @@ export const LectureModal = ({ isOpen, onClose, lesson, userId }: LectureModalPr
   const [isPreview, setIsPreview] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [commentText, setCommentText] = useState("");
+  const { profile } = useAuth();
+  const { comments, loading: commentsLoading, createComment } = useComments(lesson?.id);
 
   // Extract YouTube ID from URL
   const getYouTubeId = (url: string): string | null => {
@@ -300,10 +305,52 @@ export const LectureModal = ({ isOpen, onClose, lesson, userId }: LectureModalPr
                 </TabsContent>
 
                 <TabsContent value="discussion" className="flex-1 overflow-hidden mt-0 px-4 py-4">
-                  <div className="bg-card rounded-xl border p-4 h-full">
-                    <p className="text-muted-foreground text-center py-8">
-                      Discussion feature coming soon...
-                    </p>
+                  <div className="bg-card rounded-xl border p-4 h-full flex flex-col">
+                    {/* Comment input */}
+                    <div className="flex gap-2 mb-4">
+                      <Textarea
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder="Write a comment..."
+                        className="min-h-[60px] resize-none flex-1"
+                      />
+                      <Button
+                        size="icon"
+                        className="shrink-0 self-end"
+                        disabled={!commentText.trim()}
+                        onClick={async () => {
+                          if (!lesson?.id || !commentText.trim()) return;
+                          const ok = await createComment({ lessonId: lesson.id, message: commentText.trim() });
+                          if (ok) setCommentText("");
+                        }}
+                      >
+                        <Send className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    {/* Comments list */}
+                    <ScrollArea className="flex-1">
+                      {commentsLoading ? (
+                        <div className="space-y-3">
+                          {[1, 2, 3].map(i => <Skeleton key={i} className="h-12 w-full" />)}
+                        </div>
+                      ) : comments.length === 0 ? (
+                        <p className="text-muted-foreground text-center py-6 text-sm">No comments yet. Be the first!</p>
+                      ) : (
+                        <div className="space-y-3">
+                          {comments.map((c) => (
+                            <div key={c.id} className="p-3 rounded-lg bg-muted/50">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-sm font-medium text-foreground">{c.userName}</span>
+                                <span className="text-xs text-muted-foreground">
+                                  {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : ""}
+                                </span>
+                              </div>
+                              <p className="text-sm text-foreground/80">{c.message}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </ScrollArea>
                   </div>
                 </TabsContent>
               </Tabs>
