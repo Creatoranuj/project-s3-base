@@ -1,73 +1,46 @@
 
 
-# Plan: APK Generation Guide, Download Page & Error Fixes
+# Plan: Fix Discussion, Real Data, and Admin Entry Button
 
-## Current State
-- Capacitor is already installed and configured (`capacitor.config.ts` exists with correct appId and appName)
-- PWA manifest and service worker are in place
-- No console errors or network errors detected
-- The service worker cache name still says `refresh-academy-v1` (stale branding)
-- `DEPLOY.md` still references "Sadhguru Coaching Centre" (stale branding)
+## Issues Identified
 
-## What Will Be Done
+1. **Discussion tab shows "coming soon"** in `LectureModal.tsx` (line 305) — needs to be wired to the real `comments` table using `useComments` hook (already exists and works in `LessonView.tsx`)
 
-### 1. Fix Service Worker Branding
-Update `public/sw.js` cache name from `refresh-academy-v1` to `sadguru-coaching-v1`.
+2. **Course cards show hardcoded data** — `Courses.tsx` hardcodes `rating: 4.8`, `duration: "12h 00m"`, `lessons_count: 15` (lines 61-63) instead of fetching real lesson counts from the database
 
-### 2. Fix DEPLOY.md Branding
-Update title from "Sadhguru Coaching Centre" to "Sadguru Coaching Classes".
+3. **AllClasses shows `lessonCount: 0`** — `AllClasses.tsx` sets `lessonCount: 0` (line 75) without querying actual lesson counts per course
 
-### 3. Create Download/Install Guide Page
-Create a new page at `/install` (`src/pages/Install.tsx`) that:
-- Detects if user is on Android, iOS, or desktop
-- Shows platform-specific installation instructions
-- For Android: "Install as PWA" instructions + link to download APK from GitHub release
-- For iOS: Safari "Add to Home Screen" instructions
-- For Desktop: Browser install instructions
-- Clean, branded UI matching the app's design system
+4. **No Admin Panel button in sidebar** — The sidebar has no link to `/admin` for admin users
 
-### 4. Add Route for Install Page
-Add `/install` route in `src/App.tsx`.
+## Changes
 
-### 5. Create APK Build Documentation
-Create `docs/APK-BUILD-GUIDE.md` with step-by-step instructions:
+### 1. Wire Discussion in LectureModal (`src/components/course/LectureModal.tsx`)
+- Import `useComments` hook and `useAuth`
+- Replace the "coming soon" placeholder with a real comment list and post form (similar to `LessonView.tsx` discussion tab)
+- Show comment input with user avatar, textarea, and post button
+- Display existing comments with username, timestamp, and message
 
-```text
-APK Generation Flow:
-┌──────────────┐    ┌──────────┐    ┌──────────────┐
-│ Export to     │───>│ npm      │───>│ npx cap add  │
-│ GitHub       │    │ install  │    │ android      │
-└──────────────┘    └──────────┘    └──────────────┘
-                                          │
-┌──────────────┐    ┌──────────┐    ┌─────▼────────┐
-│ Upload APK   │<───│ Build in │<───│ npx cap sync │
-│ to Release   │    │ Studio   │    │              │
-└──────────────┘    └──────────┘    └──────────────┘
-```
+### 2. Fix Course Card Real Data (`src/pages/Courses.tsx`)
+- After fetching courses, query `lessons` table to get actual lesson count per course using a grouped count
+- Calculate total duration from lesson `duration` column
+- Pass real `lessons_count` and formatted `duration` to `CourseCard`
 
-Steps documented:
-1. Export to GitHub, clone locally
-2. `npm install`
-3. `npx cap add android`
-4. `npm run build && npx cap sync`
-5. `npx cap open android`
-6. Build → Build APK in Android Studio
-7. Create GitHub release, attach APK
+### 3. Fix AllClasses Lesson Count (`src/pages/AllClasses.tsx`)
+- After fetching courses, query `lessons` table grouped by `course_id` to get real lesson counts
+- Update each course's `lessonCount` with actual data
 
-### 6. Update DEPLOY.md
-Add Capacitor/APK section to existing deployment docs.
+### 4. Add Admin Panel Button to Sidebar (`src/components/Layout/Sidebar.tsx`)
+- Import `useAuth` hook (already imported)
+- Check if user has admin role via `useAuth`
+- Conditionally render an "Admin Panel" menu item with `ShieldAlert` icon linking to `/admin` — only visible to admin users
+- Style it distinctly (e.g., with accent color) so it stands out
 
-### 7. Update memorywork.md
-Document APK guide creation and install page.
+## Files to Modify
 
-## Files to Create/Modify
-
-| File | Action |
+| File | Change |
 |------|--------|
-| `src/pages/Install.tsx` | Create — download/install guide page |
-| `src/App.tsx` | Add `/install` route |
-| `docs/APK-BUILD-GUIDE.md` | Create — full APK build documentation |
-| `public/sw.js` | Fix cache name branding |
-| `DEPLOY.md` | Update branding + add Capacitor section |
-| `memorywork.md` | Document changes |
+| `src/components/course/LectureModal.tsx` | Replace discussion placeholder with real comments |
+| `src/pages/Courses.tsx` | Fetch real lesson counts instead of hardcoded values |
+| `src/pages/AllClasses.tsx` | Fetch real lesson counts per course |
+| `src/components/Layout/Sidebar.tsx` | Add conditional Admin Panel button for admin users |
 
