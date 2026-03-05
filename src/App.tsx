@@ -49,6 +49,7 @@ const LectureListing = lazy(() => import("./pages/LectureListing"));
 const MyCourses = lazy(() => import("./pages/MyCourses"));
  const MyCourseDetail = lazy(() => import("./pages/MyCourseDetail"));
 const AllTests = lazy(() => import("./pages/AllTests"));
+const Install = lazy(() => import("./pages/Install"));
 
 // Optimized QueryClient with better caching
 const queryClient = new QueryClient({
@@ -115,6 +116,7 @@ const App = () => (
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route path="/install" element={<Install />} />
                   
                   {/* Admin Routes */}
                   <Route path="/admin" element={<Admin />} />

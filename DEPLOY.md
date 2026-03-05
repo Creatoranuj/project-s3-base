@@ -1,4 +1,4 @@
-# Deployment Guide - Sadhguru Coaching Centre PWA
+# Deployment Guide - Sadguru Coaching Classes PWA
 
 ## Prerequisites
 - Node.js 18+ and npm/bun installed
@@ -37,11 +37,25 @@ The included `vercel.json` handles SPA routing.
 ### 4. Static Hosting (Nginx, Apache, etc.)
 Serve the `dist/` folder. Ensure all routes fallback to `index.html` for SPA routing.
 
+### 5. Android APK (Capacitor)
+See [`docs/APK-BUILD-GUIDE.md`](docs/APK-BUILD-GUIDE.md) for the full step-by-step guide.
+
+Quick summary:
+```bash
+npm install
+npm run build
+npx cap add android
+npx cap sync
+npx cap open android
+# Build → Build APK in Android Studio
+```
+
 ## PWA Installation
 Once deployed with HTTPS:
 - **Android**: Browser menu → "Install app" or "Add to Home Screen"
 - **iOS**: Safari → Share → "Add to Home Screen"
-- The app icon will appear on the device home screen
+- **Desktop**: Click the install icon in the browser address bar
+- Visit `/install` in the app for a guided installation walkthrough
 
 ## Environment Variables
 | Variable | Description |
@@ -54,3 +68,4 @@ Once deployed with HTTPS:
 - [ ] Check service worker registers (`/sw.js`)
 - [ ] Test offline fallback
 - [ ] Confirm app icon and splash screen appear correctly
+- [ ] Test APK installation on Android device (if generated)

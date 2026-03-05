@@ -1,5 +1,16 @@
 # Memorywork – Changes Log
 
+## Date: 2026-03-05 (APK Build Guide, Install Page & Branding Fixes)
+
+### Changes Made
+- Fixed `public/sw.js` cache name: `refresh-academy-v1` → `sadguru-coaching-v1`
+- Updated `DEPLOY.md` branding to "Sadguru Coaching Classes" + added Capacitor/APK section
+- Created `src/pages/Install.tsx` — platform-aware install guide (Android APK/PWA, iOS, Desktop)
+- Added `/install` route in `src/App.tsx`
+- Created `docs/APK-BUILD-GUIDE.md` — full Capacitor APK build documentation
+
+---
+
 ## Date: 2026-03-04 (Rebrand: Sadhguru Coaching Centre → Sadguru Coaching Classes)
 
 ### Changes Made
