@@ -1,4 +1,4 @@
-import { X, Home, BookOpen, Users, Calendar, FileText, MessageCircle, Settings, LogOut, User, Bell, Library } from "lucide-react";
+import { X, Home, BookOpen, Users, Calendar, FileText, MessageCircle, Settings, LogOut, User, Bell, Library, ShieldCheck } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ const menuItems = [
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, profile, logout, isAuthenticated } = useAuth();
+  const { user, profile, logout, isAuthenticated, isAdmin } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -98,6 +98,17 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             );
           })}
 
+          {/* Admin Panel Link */}
+          {isAuthenticated && isAdmin && (
+            <Link
+              to="/admin"
+              onClick={onClose}
+              className="flex items-center gap-3 px-4 py-3 mx-2 mt-2 rounded-lg bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-colors"
+            >
+              <ShieldCheck className="h-5 w-5" />
+              <span>Admin Panel</span>
+            </Link>
+          )}
         </nav>
 
         {/* Footer */}

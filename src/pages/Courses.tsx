@@ -20,10 +20,33 @@ const Courses = () => {
   const [enrolledCourseIds, setEnrolledCourseIds] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
 
+  const [lessonCounts, setLessonCounts] = useState<Record<number, { count: number; duration: number }>>({});
+
   useEffect(() => {
     fetchCourses();
     fetchEnrollments();
+    fetchLessonCounts();
   }, [user]);
+
+  const fetchLessonCounts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("lessons")
+        .select("course_id, duration");
+      if (!error && data) {
+        const counts: Record<number, { count: number; duration: number }> = {};
+        data.forEach((l: any) => {
+          if (!l.course_id) return;
+          if (!counts[l.course_id]) counts[l.course_id] = { count: 0, duration: 0 };
+          counts[l.course_id].count++;
+          counts[l.course_id].duration += (l.duration || 0);
+        });
+        setLessonCounts(counts);
+      }
+    } catch (err) {
+      console.error("Error fetching lesson counts:", err);
+    }
+  };
 
   const fetchEnrollments = async () => {
     if (!user) return;
@@ -40,6 +63,13 @@ const Courses = () => {
     } catch (error) {
       console.error("Error fetching enrollments:", error);
     }
+  };
+
+  const formatDuration = (minutes: number) => {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    if (h > 0) return `${h}h ${m}m`;
+    return `${m}m`;
   };
 
   const fetchCourses = async () => {
@@ -59,8 +89,8 @@ const Courses = () => {
           description: item.description || "No description available",
           price: Number(item.price) || 0,
           rating: 4.8,
-          duration: "12h 00m",
-          lessons_count: 15,
+          duration: "0m",
+          lessons_count: 0,
         }));
         setCourseList(safeData);
       }
@@ -112,22 +142,30 @@ const Courses = () => {
           <div className="text-center py-12 text-muted-foreground">Loading courses...</div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredCourses.map((course) => (
-              <CourseCard 
-                key={course.id} 
-                course={course}
-                isAdmin={isAdmin}
-                onAdminEnroll={adminEnroll}
-                isEnrolling={isEnrolling}
-                onClick={() => {
-                  if (course.price === 0 || enrolledCourseIds.has(course.id)) {
-                    navigate(`/classes/${course.id}/chapters`);
-                  } else {
-                    navigate(`/buy-course?id=${course.id}`);
-                  }
-                }}
-              />
-            ))}
+            {filteredCourses.map((course) => {
+              const stats = lessonCounts[course.id];
+              const enriched = {
+                ...course,
+                lessons_count: stats?.count || 0,
+                duration: stats ? formatDuration(stats.duration) : "0m",
+              };
+              return (
+                <CourseCard 
+                  key={course.id} 
+                  course={enriched}
+                  isAdmin={isAdmin}
+                  onAdminEnroll={adminEnroll}
+                  isEnrolling={isEnrolling}
+                  onClick={() => {
+                    if (course.price === 0 || enrolledCourseIds.has(course.id)) {
+                      navigate(`/classes/${course.id}/chapters`);
+                    } else {
+                      navigate(`/buy-course?id=${course.id}`);
+                    }
+                  }}
+                />
+              );
+            })}
           </div>
         )}
 
