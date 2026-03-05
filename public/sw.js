@@ -1,4 +1,4 @@
-const CACHE_NAME = 'refresh-academy-v1';
+const CACHE_NAME = 'sadguru-coaching-v1';
 const STATIC_ASSETS = [
   '/',
   '/dashboard',
