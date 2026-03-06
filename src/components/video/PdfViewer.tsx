@@ -1,6 +1,8 @@
 import { memo, useMemo, useState } from "react";
-import { FileText, ExternalLink, Maximize, Minimize } from "lucide-react";
+import { FileText, ExternalLink, Maximize, Minimize, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { downloadFile } from "@/utils/fileUtils";
+import { toast } from "sonner";
 import mahimaLogo from "@/assets/mahima-academy-logo.png";
 
 interface PdfViewerProps {
@@ -8,13 +10,9 @@ interface PdfViewerProps {
   title?: string;
 }
 
-/**
- * Inline PDF Viewer - renders PDFs on-domain with no external redirects.
- * Supports Google Drive PDFs and direct PDF URLs.
- * Full-page height for better student interaction.
- */
 const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   const { embedUrl, openUrl } = useMemo(() => {
     const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -38,12 +36,16 @@ const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
     return { embedUrl: url, openUrl: url };
   }, [url]);
 
-  const handleOpenNewTab = () => {
-    window.open(openUrl, "_blank", "noopener,noreferrer");
-  };
-
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const handleDownload = async () => {
+    setDownloading(true);
+    try {
+      await downloadFile(url, title ? `${title}.pdf` : undefined);
+      toast.success("Download started");
+    } catch {
+      toast.error("Download failed");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   return (
@@ -51,11 +53,12 @@ const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
       className={
         isFullscreen
           ? "fixed inset-0 z-[100] bg-background flex flex-col"
-          : "relative w-full rounded-xl overflow-hidden border border-border bg-card"
+          : "relative w-full rounded-xl overflow-hidden border border-border bg-card flex flex-col"
       }
+      style={isFullscreen ? undefined : { height: "calc(100dvh - 44px)" }}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 border-b border-border">
+      <div className="flex items-center gap-2 px-4 py-2 bg-muted/50 border-b border-border shrink-0">
         <FileText className="w-4 h-4 text-primary shrink-0" />
         <span className="text-sm font-medium text-foreground truncate flex-1">
           {title || "Document"}
@@ -65,30 +68,38 @@ const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
             variant="ghost"
             size="sm"
             className="h-8 px-2 text-muted-foreground hover:text-foreground"
-            onClick={toggleFullscreen}
-            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+            onClick={handleDownload}
+            disabled={downloading}
+            title="Download PDF"
           >
-            {isFullscreen ? (
-              <Minimize className="w-4 h-4" />
-            ) : (
-              <Maximize className="w-4 h-4" />
-            )}
+            <Download className="w-4 h-4" />
+            <span className="ml-1 hidden sm:inline text-xs">
+              {downloading ? "…" : "Download"}
+            </span>
           </Button>
           <Button
             variant="ghost"
             size="sm"
             className="h-8 px-2 text-muted-foreground hover:text-foreground"
-            onClick={handleOpenNewTab}
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 px-2 text-muted-foreground hover:text-foreground"
+            onClick={() => window.open(openUrl, "_blank", "noopener,noreferrer")}
             title="Open in new tab"
           >
             <ExternalLink className="w-4 h-4" />
-            <span className="ml-1 hidden sm:inline text-xs">Open</span>
           </Button>
         </div>
       </div>
 
-      {/* PDF iframe - full page height */}
-      <div className="relative flex-1" style={{ height: isFullscreen ? undefined : 'calc(100dvh - 44px)' }}>
+      {/* PDF iframe — fills remaining space */}
+      <div className="relative flex-1 min-h-0">
         <iframe
           src={embedUrl}
           className="w-full h-full border-0"
@@ -96,8 +107,6 @@ const PdfViewer = memo(({ url, title }: PdfViewerProps) => {
           sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"
           loading="lazy"
         />
-
-        {/* Drive overlays removed for cleaner embed */}
 
         {/* Branding bar */}
         <div
