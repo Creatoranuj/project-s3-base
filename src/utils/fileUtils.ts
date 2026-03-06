@@ -34,10 +34,10 @@ export const getDownloadUrl = (url: string): string => {
     return `https://docs.google.com/document/d/${docsId}/export?format=pdf`;
   }
 
-  // Archive.org
+  // Archive.org — fallback to download listing page (shows all formats)
   const archiveId = extractArchiveId(url);
   if (archiveId) {
-    return `https://archive.org/download/${archiveId}/${archiveId}.pdf`;
+    return `https://archive.org/download/${archiveId}`;
   }
 
   // Direct URL — return as-is
@@ -59,14 +59,13 @@ const extractFilename = (url: string, fallback = "document.pdf"): string => {
 
 /**
  * Download a file directly without leaving the app.
- * Tries blob fetch first; falls back to opening the download URL in a hidden iframe.
+ * Tries blob fetch first; falls back to opening the download URL in a new tab.
  */
 export const downloadFile = async (url: string, filename?: string): Promise<void> => {
   const downloadUrl = getDownloadUrl(url);
   const name = filename || extractFilename(downloadUrl);
 
   try {
-    // Attempt direct blob fetch (works for same-origin & CORS-enabled URLs)
     const res = await fetch(downloadUrl, { mode: "cors" });
     if (res.ok) {
       const blob = await res.blob();
@@ -83,10 +82,10 @@ export const downloadFile = async (url: string, filename?: string): Promise<void
       return;
     }
   } catch {
-    // CORS blocked — fall through to fallback
+    // CORS blocked — fall through
   }
 
-  // Fallback: open the download URL via a hidden link (triggers browser download for Drive/Docs export URLs)
+  // Fallback: open the download URL directly
   const a = document.createElement("a");
   a.href = downloadUrl;
   a.download = name;

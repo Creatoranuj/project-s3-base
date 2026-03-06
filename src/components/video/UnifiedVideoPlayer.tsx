@@ -12,17 +12,28 @@ interface UnifiedVideoPlayerProps {
   onReady?: () => void;
 }
 
-type Platform = "youtube" | "drive" | "vimeo" | "archive" | "direct" | "unknown";
+type Platform = "youtube" | "drive" | "docs" | "vimeo" | "archive" | "direct" | "unknown";
 
 const detectPlatform = (url: string): Platform => {
   if (!url) return "unknown";
   if (/youtube\.com|youtu\.be/.test(url)) return "youtube";
+  if (/docs\.google\.com\/document/.test(url)) return "docs";
   if (/drive\.google\.com/.test(url)) return "drive";
   if (/vimeo\.com/.test(url)) return "vimeo";
   if (/archive\.org/.test(url)) return "archive";
   if (/\.(mp4|webm|ogg)($|\?)/i.test(url)) return "direct";
-  if (/\.pdf($|\?)/i.test(url)) return "drive";
+  if (/\.pdf($|\?)/i.test(url)) return "drive"; // route PDFs to DriveEmbedViewer
   return "unknown";
+};
+
+/** Check if an Archive.org URL is likely a document (not video) */
+const isArchiveDocument = (url: string): boolean => {
+  // If URL explicitly references a video format, treat as video
+  if (/\.(mp4|webm|ogv)($|\?)/i.test(url)) return false;
+  // Book/text patterns
+  if (/\/details\/[^/]*(?:book|text|pdf|doc)/i.test(url)) return true;
+  // Default: treat archive as document (embed viewer handles both)
+  return true;
 };
 
 const getVimeoId = (url: string) => url.match(/vimeo\.com\/(\d+)/)?.[1] || "";
@@ -38,22 +49,42 @@ const UnifiedVideoPlayer = ({ url, title, onEnded, onReady }: UnifiedVideoPlayer
     );
   }
 
-  // Drive / PDF
-  if (platform === "drive") {
+  // Drive / PDF / Docs — use DriveEmbedViewer
+  if (platform === "drive" || platform === "docs") {
     return (
       <Suspense fallback={<Skeleton className="aspect-[4/3] w-full" />}>
-        <div className="relative">
-          <DriveEmbedViewer url={url} title={title || "Document"} />
-          {/* Top overlay to hide Drive header */}
-          <div className="absolute top-0 left-0 right-0 z-10" style={{ height: "48px", background: "hsl(var(--card))" }} />
-          {/* Top-right pop-out button cover */}
-          <div className="absolute top-0 right-0 z-10" style={{ width: "80px", height: "48px", background: "hsl(var(--card))" }} />
-        </div>
+        <DriveEmbedViewer url={url} title={title || "Document"} />
       </Suspense>
     );
   }
 
-  // Vimeo — aggressive masking
+  // Archive.org — route documents to DriveEmbedViewer, videos to iframe
+  if (platform === "archive") {
+    if (isArchiveDocument(url)) {
+      return (
+        <Suspense fallback={<Skeleton className="aspect-[4/3] w-full" />}>
+          <DriveEmbedViewer url={url} title={title || "Document"} />
+        </Suspense>
+      );
+    }
+
+    const embedUrl = url.replace("/details/", "/embed/");
+    return (
+      <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden" ref={containerRef}>
+        <iframe
+          src={embedUrl}
+          className="w-full h-full border-0"
+          allowFullScreen
+          title={title || "Archive.org Video"}
+        />
+        <div className="absolute top-0 left-0 right-0 z-[45]" style={{ height: "50px", background: "black" }} />
+        <div className="absolute bottom-0 right-0 z-[45]" style={{ width: "180px", height: "40px", background: "black" }} />
+        <BrandingOverlay />
+      </div>
+    );
+  }
+
+  // Vimeo
   if (platform === "vimeo") {
     return (
       <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden" ref={containerRef}>
@@ -64,38 +95,14 @@ const UnifiedVideoPlayer = ({ url, title, onEnded, onReady }: UnifiedVideoPlayer
           allowFullScreen
           title={title || "Vimeo Video"}
         />
-        {/* Bottom-right Vimeo logo mask */}
         <div className="absolute bottom-0 right-0 z-[45]" style={{ width: "120px", height: "44px", background: "black" }} />
-        {/* Top-right heart/like/share buttons mask */}
         <div className="absolute top-0 right-0 z-[45]" style={{ width: "60px", height: "200px", background: "black" }} />
-        {/* Full-width branding bar */}
         <BrandingOverlay />
       </div>
     );
   }
 
-  // Archive.org — aggressive masking
-  if (platform === "archive") {
-    const embedUrl = url.replace("/details/", "/embed/");
-    return (
-      <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden" ref={containerRef}>
-        <iframe
-          src={embedUrl}
-          className="w-full h-full border-0"
-          allowFullScreen
-          title={title || "Archive.org Video"}
-        />
-        {/* Top title bar mask */}
-        <div className="absolute top-0 left-0 right-0 z-[45]" style={{ height: "50px", background: "black" }} />
-        {/* Bottom controls branding mask */}
-        <div className="absolute bottom-0 right-0 z-[45]" style={{ width: "180px", height: "40px", background: "black" }} />
-        {/* Full-width branding bar */}
-        <BrandingOverlay />
-      </div>
-    );
-  }
-
-  // Direct video (mp4/webm)
+  // Direct video
   if (platform === "direct") {
     return (
       <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
@@ -123,7 +130,6 @@ const UnifiedVideoPlayer = ({ url, title, onEnded, onReady }: UnifiedVideoPlayer
   );
 };
 
-// Branding overlay — clean, no heavy black masking
 const BrandingOverlay = () => (
   <div
     className="absolute bottom-0 left-0 right-0 z-[46] flex items-center justify-between px-3 py-2 select-none pointer-events-none"
@@ -132,7 +138,7 @@ const BrandingOverlay = () => (
     <div className="flex items-center gap-2" style={{ pointerEvents: 'auto', cursor: 'default' }} onClick={(e) => e.stopPropagation()}>
       <img src={refreshLogo} alt="" className="h-8 w-8 rounded" draggable={false} />
     </div>
-    <div 
+    <div
       className="flex items-center gap-1.5 px-3 py-1 rounded-md"
       style={{ background: 'rgba(128,128,128,0.65)', backdropFilter: 'blur(4px)', pointerEvents: 'auto', cursor: 'default' }}
       onClick={(e) => e.stopPropagation()}
