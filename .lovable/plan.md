@@ -1,46 +1,46 @@
+# Plan: Fix PDF Viewer Full-Page + Download + Archive.org Support
 
+## Problems Found
 
-# Plan: Fix Discussion, Real Data, and Admin Entry Button
-
-## Issues Identified
-
-1. **Discussion tab shows "coming soon"** in `LectureModal.tsx` (line 305) — needs to be wired to the real `comments` table using `useComments` hook (already exists and works in `LessonView.tsx`)
-
-2. **Course cards show hardcoded data** — `Courses.tsx` hardcodes `rating: 4.8`, `duration: "12h 00m"`, `lessons_count: 15` (lines 61-63) instead of fetching real lesson counts from the database
-
-3. **AllClasses shows `lessonCount: 0`** — `AllClasses.tsx` sets `lessonCount: 0` (line 75) without querying actual lesson counts per course
-
-4. **No Admin Panel button in sidebar** — The sidebar has no link to `/admin` for admin users
+1. **DriveEmbedViewer returns `null` for Archive.org URLs** — Line 56: `if (!isDrive && !isPdf) return null` means Archive.org content never renders through this component
+2. **PdfViewer is never used** — It exists but no component imports it; all PDF/Drive rendering goes through DriveEmbedViewer
+3. **Archive.org download URL assumes `{id}.pdf**` — This may not match the actual filename on Archive.org; needs smarter fallback
+4. **No fullscreen toggle in DriveEmbedViewer** — PdfViewer has it but DriveEmbedViewer doesn't, and DriveEmbedViewer is what's actually used everywhere
+5. Test the PDF viewer with a Google Drive link, Archive.org link, and direct PDF to verify download and fullscreen work correctly
+6.   
+Add a Google Docs document viewer with export-to-PDF download support in DriveEmbedViewer  
+Add a Google Docs document viewer with export-to-PDF download support in DriveEmbedViewer
+7.   
+Ensure the discussion tab in lecture modal shows real comments and allows posting
 
 ## Changes
 
-### 1. Wire Discussion in LectureModal (`src/components/course/LectureModal.tsx`)
-- Import `useComments` hook and `useAuth`
-- Replace the "coming soon" placeholder with a real comment list and post form (similar to `LessonView.tsx` discussion tab)
-- Show comment input with user avatar, textarea, and post button
-- Display existing comments with username, timestamp, and message
+### 1. Expand DriveEmbedViewer to handle Archive.org URLs (`src/components/course/DriveEmbedViewer.tsx`)
 
-### 2. Fix Course Card Real Data (`src/pages/Courses.tsx`)
-- After fetching courses, query `lessons` table to get actual lesson count per course using a grouped count
-- Calculate total duration from lesson `duration` column
-- Pass real `lessons_count` and formatted `duration` to `CourseCard`
+- Add Archive.org detection: if URL contains `archive.org`, extract identifier, use `archive.org/embed/{id}` for embedding
+- Remove the `if (!isDrive && !isPdf) return null` guard — instead render any URL that matches drive/pdf/archive/docs patterns
+- Add Google Docs detection too (embed via `docs.google.com/document/d/{id}/preview`)
+- Add fullscreen toggle (matching PdfViewer's implementation)
+- Add branding bar at bottom
 
-### 3. Fix AllClasses Lesson Count (`src/pages/AllClasses.tsx`)
-- After fetching courses, query `lessons` table grouped by `course_id` to get real lesson counts
-- Update each course's `lessonCount` with actual data
+### 2. Improve Archive.org download in fileUtils (`src/utils/fileUtils.ts`)
 
-### 4. Add Admin Panel Button to Sidebar (`src/components/Layout/Sidebar.tsx`)
-- Import `useAuth` hook (already imported)
-- Check if user has admin role via `useAuth`
-- Conditionally render an "Admin Panel" menu item with `ShieldAlert` icon linking to `/admin` — only visible to admin users
-- Style it distinctly (e.g., with accent color) so it stands out
+- Keep current approach but add a `no-cors` fallback: if blob fetch fails, open `archive.org/download/{id}` directly which shows Archive.org's own download page with all available formats
+
+### 3. Update UnifiedVideoPlayer Archive.org handling (`src/components/video/UnifiedVideoPlayer.tsx`)
+
+- For Archive.org URLs that are PDFs/documents (not videos), route to DriveEmbedViewer instead of the video iframe
+- Detect PDF vs video by checking if URL contains `/details/` patterns for books vs videos
+
+### 4. Remove unused PdfViewer or consolidate
+
+- Since DriveEmbedViewer will now handle all cases, keep PdfViewer as-is but it remains unused — no changes needed
 
 ## Files to Modify
 
-| File | Change |
-|------|--------|
-| `src/components/course/LectureModal.tsx` | Replace discussion placeholder with real comments |
-| `src/pages/Courses.tsx` | Fetch real lesson counts instead of hardcoded values |
-| `src/pages/AllClasses.tsx` | Fetch real lesson counts per course |
-| `src/components/Layout/Sidebar.tsx` | Add conditional Admin Panel button for admin users |
 
+| File                                          | Change                                                                      |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| `src/components/course/DriveEmbedViewer.tsx`  | Add Archive.org + Docs support, fullscreen, branding bar, remove null guard |
+| `src/components/video/UnifiedVideoPlayer.tsx` | Route archive PDFs to DriveEmbedViewer                                      |
+| `src/utils/fileUtils.ts`                      | Minor: improve Archive.org download fallback URL                            |
