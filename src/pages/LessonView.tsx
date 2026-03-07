@@ -336,8 +336,8 @@ const LessonView = () => {
               <Lock className="h-3 w-3 text-muted-foreground" />
             </div>
           ) : isCompleted ? (
-            <div className="h-6 w-6 rounded-full bg-green-500 flex items-center justify-center">
-              <CheckCircle className="h-4 w-4 text-white fill-white" />
+                            <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                              <CheckCircle className="h-4 w-4 text-primary-foreground fill-primary-foreground" />
             </div>
           ) : (
             <div className="h-6 w-6 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center text-xs font-medium text-muted-foreground">
@@ -414,7 +414,7 @@ const LessonView = () => {
                   <p className="text-gray-300 mb-6 max-w-md">
                     Unlock instant access to all {lessons.length} lessons.
                   </p>
-                  <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white font-bold px-8"
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8"
                     onClick={() => navigate(`/buy-course?id=${courseId}`)}>
                     Unlock Full Course
                   </Button>
